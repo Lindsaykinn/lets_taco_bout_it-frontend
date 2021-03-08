@@ -1,26 +1,54 @@
-const tacos = []
+const tacos = [
+  {name: "Asada Zing Taco",
+	  image: "",
+    description: "Bulgogi (Korean) marinated steak topped with shiitake mushrooms, lettuce, soy sesame vinaigrette and sesame seeds",
+    restaurant: "Taqueria Tsunami",
+    url: "https://taqueriatsunami.com/",
+    location: "Marietta, GA"    
+  },
+  {name: "Pacific Rim Taco",
+	  image: "",
+    description: "Grilled chili crusted Mahi topped with lettuce, pico de gallo and hoisin lime aioli",
+    restaurant: "Taqueria Tsunami",
+    url: "https://taqueriatsunami.com/",
+    location: "Marietta, GA"    
+  },
+  {name: "tuna tatako",
+	  image: "",
+    description: "ancho-crusted tuna, asian slaw, thai basil vinaigrette, soy glaze, lettuce shell (served chilled). topped with: toasted sesame seeds",
+    restaurant: "bartaco",
+    url: "https://bartaco.com/",
+    location: "Atlanta, GA"    
+  },
+
+]
 // WHEN PAGE IS LOADED
 document.addEventListener("DOMContentLoaded", () => {
   renderForm();
+  renderAllTacos();
 
 })
 
-// MAIN DIV
-function getMain() {
-  return document.getElementById('main')
+// MAIN DIVs
+function getTacoForm() {
+  return document.getElementById('taco-form')
 }
 
-function resetMain() {
-  getMain().innerHTML = ""
+function getAllTacos(){
+  return document.getElementById('all-tacos')
 }
 
-// INPUTS
+// function resetMain() {
+//   getMain().innerHTML = ""
+// }
+
+// INPUTS (DOM Getters)
 function nameInput() {
   return document.getElementById('name')
 }
 
 function imageInput() {
-  return document.getElementById('image-url')
+  return document.getElementById('image')
 }
 
 function descInput() {
@@ -28,7 +56,7 @@ function descInput() {
 }
 
 function restaurantInput() {
-  return document.getElementById('restaurant-name')
+  return document.getElementById('restaurant')
 }
 
 function urlInput() {
@@ -40,12 +68,12 @@ function locationInput() {
 }
 
 function resetFormInputs() {
-  nameInput().innerHTML = ""
-  imageInput().innerHTML = ""
-  descInput().innerHTML = ""
-  restaurantInput().innerHTML = ""
-  urlInput().innerHTML = ""
-  locationInput().innerHTML = ""
+  nameInput().value = ""
+  imageInput().value = ""
+  descInput().value = ""
+  restaurantInput().value = ""
+  urlInput().value = ""
+  locationInput().value = ""
 }
 
 // FORMS
@@ -57,8 +85,8 @@ function tacoForm() {
         <input type="text" name="name" id="name">
       </div>
       <div class="input-field">
-        <label for="image-url"></label><br>
-        <input type="text" name='image-url' id="image-url" >
+        <label for="image"></label><br>
+        <input type="text" name='image' id="image" >
       </div>
       <div class="input-field">
         <label for="description">Description</label> <br>
@@ -66,8 +94,8 @@ function tacoForm() {
       </div>
       <br>
       <div class="input-field">
-        <label for="restaurant-name">Restaurant Name</label> 
-        <input type="text" name="restaurant-name" id="restaurant-name"> -- 
+        <label for="restaurant">Restaurant Name</label> 
+        <input type="text" name="restaurant" id="restaurant"> -- 
         <label for="url">Restaurant Website</label>
         <input type="text" name="url" id="url">
       </div>
@@ -89,7 +117,7 @@ function form() {
 function renderForm() {
   // resetMain();
   // adding form to main div
-  getMain().innerHTML = tacoForm();
+  getTacoForm().innerHTML = tacoForm();
   // putting form in DOM
   form().addEventListener('submit', submitForm);
 }
@@ -99,11 +127,60 @@ function submitForm(e) {
 
   //creating a taco object
   tacos.push({
-    name: nameInput().innerText,
-    image: imageInput().innerText,
-    description: descInput().innerText,
-    restaurant: restaurantInput().innerText,
-    url: urlInput().innerText,
-    location: locationInput().innerText
+    name: nameInput().value,
+    image: imageInput().value,
+    description: descInput().value,
+    restaurant: restaurantInput().value,
+    url: urlInput().value,
+    location: locationInput().value
+  })
+
+  resetFormInputs()
+}
+
+// After taco object exists
+function tacosTemplate(){
+  return `
+  <h2><u>Tacos</u></h2>
+    <div id="tacos">
+      
+      </div>
+  `
+}
+
+function renderOneTaco(taco){
+  let div = document.createElement('div')
+  let h4 = document.createElement('h4')
+  let pImage = document.createElement('p')
+  let pDesc = document.createElement('p')
+  let pRestaurant = document.createElement('p')
+  let pUrl = document.createElement('p')
+  let pLocation = document.createElement('p')
+  let tacosDiv = document.getElementById('tacos')
+
+  h4.innerText = taco.name
+  pImage.innerText = taco.image
+  pDesc.innerText = taco.description
+  pRestaurant.innerText = taco.restaurant
+  pUrl.innerText = taco.url
+  pLocation.innerText = taco.location
+
+  div.appendChild(h4)
+  div.appendChild(pImage)
+  div.appendChild(pDesc)
+  div.appendChild(pRestaurant)
+  div.appendChild(pUrl)
+  div.appendChild(pLocation)
+
+  tacosDiv.appendChild(div)
+}
+
+
+function renderAllTacos(){
+  // resetMain();
+  getAllTacos().innerHTML = tacosTemplate();
+
+  tacos.forEach(function(taco){
+    renderOneTaco(taco);
   })
 }

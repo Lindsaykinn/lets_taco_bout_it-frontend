@@ -24,23 +24,21 @@ const tacos = [
 ]
 // WHEN PAGE IS LOADED
 document.addEventListener("DOMContentLoaded", () => {
-  renderForm();
   renderAllTacos();
+  formLinkEvent();
+  tacoLinkEvent();
+  // renderAllTacos();
 
 })
 
 // MAIN DIVs
-function getTacoForm() {
-  return document.getElementById('taco-form')
+function main(){
+  return document.getElementById('main')
 }
 
-function getAllTacos(){
-  return document.getElementById('all-tacos')
+function resetMain() {
+  main().innerHTML = ""
 }
-
-// function resetMain() {
-//   getMain().innerHTML = ""
-// }
 
 // INPUTS (DOM Getters)
 function nameInput() {
@@ -65,6 +63,14 @@ function urlInput() {
 
 function locationInput() {
   return document.getElementById('location')
+}
+
+function formLink(){
+  return document.getElementById('form-link')
+}
+
+function tacoLink(){
+  return document.getElementById('taco-link')
 }
 
 function resetFormInputs() {
@@ -115,9 +121,9 @@ function form() {
 }
 
 function renderForm() {
-  // resetMain();
+  resetMain();
   // adding form to main div
-  getTacoForm().innerHTML = tacoForm();
+  main().innerHTML = tacoForm();
   // putting form in DOM
   form().addEventListener('submit', submitForm);
 }
@@ -135,7 +141,7 @@ function submitForm(e) {
     location: locationInput().value
   })
 
-  resetFormInputs()
+  renderAllTacos();
 }
 
 // After taco object exists
@@ -177,10 +183,27 @@ function renderOneTaco(taco){
 
 
 function renderAllTacos(){
-  // resetMain();
-  getAllTacos().innerHTML = tacosTemplate();
+  resetMain();
+  main().innerHTML = tacosTemplate();
 
   tacos.forEach(function(taco){
     renderOneTaco(taco);
+  })
+}
+
+//LINKS
+function formLinkEvent(){
+  formLink().addEventListener('click', function(e){
+    e.preventDefault()
+
+    renderForm()
+  })
+}
+
+function tacoLinkEvent(){
+  tacoLink().addEventListener('click', function(e){
+    e.preventDefault()
+
+    renderAllTacos()
   })
 }

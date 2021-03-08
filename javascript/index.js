@@ -1,30 +1,9 @@
-const tacos = [
-  {name: "Asada Zing Taco",
-	  image: "",
-    description: "Bulgogi (Korean) marinated steak topped with shiitake mushrooms, lettuce, soy sesame vinaigrette and sesame seeds",
-    restaurant: "Taqueria Tsunami",
-    url: "https://taqueriatsunami.com/",
-    location: "Marietta, GA"    
-  },
-  {name: "Pacific Rim Taco",
-	  image: "",
-    description: "Grilled chili crusted Mahi topped with lettuce, pico de gallo and hoisin lime aioli",
-    restaurant: "Taqueria Tsunami",
-    url: "https://taqueriatsunami.com/",
-    location: "Marietta, GA"    
-  },
-  {name: "tuna tatako",
-	  image: "",
-    description: "ancho-crusted tuna, asian slaw, thai basil vinaigrette, soy glaze, lettuce shell (served chilled). topped with: toasted sesame seeds",
-    restaurant: "bartaco",
-    url: "https://bartaco.com/",
-    location: "Atlanta, GA"    
-  },
+let tacos = []
 
-]
+baseUrl = "http://localhost:3000"
 // WHEN PAGE IS LOADED
 document.addEventListener("DOMContentLoaded", () => {
-  renderAllTacos();
+  getTacos();
   formLinkEvent();
   tacoLinkEvent();
   // renderAllTacos();
@@ -71,6 +50,17 @@ function formLink(){
 
 function tacoLink(){
   return document.getElementById('taco-link')
+}
+
+function getTacos(){
+  //fetch to rails api, tacos index. grab tacos list, populate main div with all tacos
+  fetch(baseUrl + '/tacos')
+    .then(resp => resp.json())
+    .then(function(data){
+      tacos = data
+
+      renderAllTacos()
+    })
 }
 
 function resetFormInputs() {
@@ -131,15 +121,30 @@ function renderForm() {
 function submitForm(e) {
   e.preventDefault();
 
-  //creating a taco object
-  tacos.push({
-    name: nameInput().value,
-    image: imageInput().value,
-    description: descInput().value,
-    restaurant: restaurantInput().value,
-    url: urlInput().value,
-    location: locationInput().value
+  let strongParams = {
+    taco: {
+      name: nameInput().value,
+      image: imageInput().value,
+      description: descInput().value,
+      restaurant: restaurantInput().value,
+      url: urlInput().value,
+      location: locationInput().value  
+  }
+
+  //send data to the backend via a post request
+  fetch('/tacos', {
+    body: strongParams
   })
+
+  //creating a taco object
+  // tacos.push({
+  //   name: nameInput().value,
+  //   image: imageInput().value,
+  //   description: descInput().value,
+  //   restaurant: restaurantInput().value,
+  //   url: urlInput().value,
+  //   location: locationInput().value
+  // })
 
   renderAllTacos();
 }
@@ -164,12 +169,12 @@ function renderOneTaco(taco){
   let pLocation = document.createElement('p')
   let tacosDiv = document.getElementById('tacos')
 
-  h4.innerText = taco.name
-  pImage.innerText = taco.image
-  pDesc.innerText = taco.description
-  pRestaurant.innerText = taco.restaurant
-  pUrl.innerText = taco.url
-  pLocation.innerText = taco.location
+  h4.innerText = `${taco.name}`
+  pImage.innerText = `${taco.image}`
+  pDesc.innerText = `${taco.description}`
+  pRestaurant.innerText = `${taco.restaurant}`
+  pUrl.innerText = `${taco.url}`
+  pLocation.innerText = `${taco.location}`
 
   div.appendChild(h4)
   div.appendChild(pImage)

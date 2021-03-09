@@ -112,6 +112,48 @@ function tacoForm() {
       </div>`
 }
 
+function editTacoForm(taco) {
+  return `
+  <form id="form" data-id="${taco.id}">
+  <div class="input-field">
+  <label for="name">Taco Name</label>
+  <input type="text" name="name" id="name" value="${taco.name}"/>
+  </div>
+  <div class="input-field">
+  <label for="image"></label><br>
+  <input type="text" name='image' id="image" value="${taco.image}" >
+  </div>
+  <div class="input-field">
+  <label for="description">Description</label> <br>
+  <textarea name="description" id="description" cols="30" rows="5">${taco.description}</textarea>
+  </div>
+  <div>
+  <select id='category' name='category' >
+    <option value="${taco.category.name}">Taco Category</option>
+    <option value="Fish">Fish</option>
+    <option value="Pork">Pork</option>
+    <option value="Beef">Beef</option>
+    <option value="Veg">Veg</option>
+  </select>
+  </div>
+  <br>
+  <div class="input-field">
+  <label for="restaurant">Restaurant Name</label> 
+  <input type="text" name="restaurant" id="restaurant" value="${taco.restaurant}"> -- 
+  <label for="url">Restaurant Website</label>
+  <input type="url" name="url" id="url" value="${taco.url}">
+      </div>
+      <br>
+      <div class='input-field'>
+      <label for="location">City & State</label>
+      <input type="text" name='location' id='location' value="${taco.location}">
+      </div>
+      <br>
+      <input type="submit" value="Edit Taco">
+      </form>
+      </div>`
+}
+
 function form() {
   return document.getElementById('form')
 }
@@ -122,6 +164,12 @@ function renderForm() {
   main().innerHTML = tacoForm();
   // putting form in DOM
   form().addEventListener('submit', submitForm);
+}
+
+function renderEditForm(taco){
+  resetMain()
+  main().innerHTML = editTacoForm(taco)
+  form().addEventListener('submit', submitEditForm)
 }
 
 function submitForm(e) {
@@ -169,6 +217,46 @@ function submitForm(e) {
   renderAllTacos();
 }
 
+function submitEditForm(e){
+  e.preventDefault();
+  let strongParams = {
+    taco: {
+      name: nameInput().value,
+      image: imageInput().value,
+      description: descInput().value,
+      restaurant: restaurantInput().value,
+      url: urlInput().value,
+      location: locationInput().value,
+      category_attributes: categoryInput().value
+    }
+  }
+  const id = e.target.dataset.id
+
+  fetch(baseUrl + "/tacos/" + id, {
+    method: "PATCH",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(strongParams)
+  })
+  .then(function(resp){
+    return resp.json();
+  })
+  .then(function(taco){
+    //selects taco out of array
+    let t = tacos.find(function(t){
+      return t.id == taco.id
+    })
+    //finding the index of the taco found in the above function
+    let idx = tacos.indexOf(t)
+    //update the index value with the newly updated taco
+    tacos[idx] = taco
+
+    renderAllTacos();
+  })
+}
+
 // After taco object exists
 function tacosTemplate() {
   return `
@@ -199,6 +287,8 @@ function renderOneTaco(taco) {
   deleteLink.innerText = 'Delete'
   deleteLink.addEventListener('click', deleteTaco)
 
+  editLink.dataset.id = taco.id
+  editLink.addEventListener('click', editTaco)
   editLink.setAttribute('href', "#")
   editLink.innerText = 'Edit'
 
@@ -218,7 +308,7 @@ function renderOneTaco(taco) {
   div.appendChild(pRestaurant)
   div.appendChild(pUrl)
   div.appendChild(pLocation)
-  div.appendChild(deleteLink)
+  div.appendChild(deleteLink)  
   div.appendChild(editLink)
 
   tacosDiv.appendChild(div)
@@ -242,6 +332,17 @@ function deleteTaco(e){
     })
     renderAllTacos();
   })
+}
+
+function editTaco(e){
+  e.preventDefault();
+  const id = e.target.dataset.id
+
+  const taco = tacos.find(function(taco){
+    return taco.id == id;
+  })
+
+  renderEditForm(taco);
 }
 
 

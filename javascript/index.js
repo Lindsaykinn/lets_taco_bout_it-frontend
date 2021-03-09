@@ -88,10 +88,10 @@ function tacoForm() {
   <div>
   <select id='category' name='category'>
     <option>Taco Category</option>
-    <option value="1">Fish</option>
-    <option value="2">Pork</option>
-    <option value="3">Beef</option>
-    <option value="4">Veg</option>
+    <option value="Fish">Fish</option>
+    <option value="Pork">Pork</option>
+    <option value="Beef">Beef</option>
+    <option value="Veg">Veg</option>
   </select>
   </div>
   <br>

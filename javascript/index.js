@@ -189,6 +189,7 @@ function renderOneTaco(taco) {
   let pUrl = document.createElement('a')
   let pLocation = document.createElement('p')
   let deleteLink = document.createElement('a')
+  let editLink = document.createElement('a')
   let tacosDiv = document.getElementById('tacos')
 
   pUrl.setAttribute('href', `${taco.url}`)
@@ -197,6 +198,10 @@ function renderOneTaco(taco) {
   deleteLink.setAttribute('href', "#")
   deleteLink.innerText = 'Delete'
   deleteLink.addEventListener('click', deleteTaco)
+
+  editLink.setAttribute('href', "#")
+  editLink.innerText = 'Edit'
+
 
   h4.innerText = `${taco.name}`
   pImage.innerText = `${taco.image}`
@@ -214,6 +219,7 @@ function renderOneTaco(taco) {
   div.appendChild(pUrl)
   div.appendChild(pLocation)
   div.appendChild(deleteLink)
+  div.appendChild(editLink)
 
   tacosDiv.appendChild(div)
 }

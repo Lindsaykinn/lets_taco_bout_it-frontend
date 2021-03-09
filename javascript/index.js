@@ -79,7 +79,7 @@ function tacoForm() {
   </div>
   <div class="input-field">
   <label for="image"></label><br>
-  <input type="text" name='image' id="image" >
+  <input type="text" name='image' id="image">
   </div>
   <div class="input-field">
   <label for="description">Description</label> <br>
@@ -121,7 +121,7 @@ function editTacoForm(taco) {
   </div>
   <div class="input-field">
   <label for="image"></label><br>
-  <input type="text" name='image' id="image" value="${taco.image}" >
+  <img src="${taco.image}" name='image' id="image" width=250 height=250>
   </div>
   <div class="input-field">
   <label for="description">Description</label> <br>
@@ -270,7 +270,10 @@ function tacosTemplate() {
 function renderOneTaco(taco) {
   let div = document.createElement('div')
   let h4 = document.createElement('h4')
-  let pImage = document.createElement('p')
+  let pImage = document.createElement('img')
+  pImage.src = taco.image
+  pImage.setAttribute('width', 250)
+  pImage.setAttribute('height', 250)
   let pDesc = document.createElement('p')
   let pCategory = document.createElement('p')
   let pRestaurant = document.createElement('p')
@@ -281,6 +284,8 @@ function renderOneTaco(taco) {
   let tacosDiv = document.getElementById('tacos')
 
   pUrl.setAttribute('href', `${taco.url}`)
+
+  
 
   deleteLink.dataset.id = taco.id
   deleteLink.setAttribute('href', "#")

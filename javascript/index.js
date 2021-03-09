@@ -99,7 +99,7 @@ function tacoForm() {
   <label for="restaurant">Restaurant Name</label> 
   <input type="text" name="restaurant" id="restaurant"> -- 
   <label for="url">Restaurant Website</label>
-  <input type="text" name="url" id="url">
+  <input type="url" name="url" id="url">
       </div>
       <br>
       <div class='input-field'>
@@ -186,9 +186,16 @@ function renderOneTaco(taco) {
   let pDesc = document.createElement('p')
   let pCategory = document.createElement('p')
   let pRestaurant = document.createElement('p')
-  let pUrl = document.createElement('p')
+  let pUrl = document.createElement('a')
   let pLocation = document.createElement('p')
+  let deleteLink = document.createElement('a')
   let tacosDiv = document.getElementById('tacos')
+
+  pUrl.setAttribute('href', `${taco.url}`)
+
+  deleteLink.dataset.id = taco.id
+  deleteLink.setAttribute('href', "#")
+  deleteLink.innerText = 'Delete'
 
   h4.innerText = `${taco.name}`
   pImage.innerText = `${taco.image}`
@@ -205,6 +212,7 @@ function renderOneTaco(taco) {
   div.appendChild(pRestaurant)
   div.appendChild(pUrl)
   div.appendChild(pLocation)
+  div.appendChild(deleteLink)
 
   tacosDiv.appendChild(div)
 }

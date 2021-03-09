@@ -196,6 +196,7 @@ function renderOneTaco(taco) {
   deleteLink.dataset.id = taco.id
   deleteLink.setAttribute('href', "#")
   deleteLink.innerText = 'Delete'
+  deleteLink.addEventListener('click', deleteTaco)
 
   h4.innerText = `${taco.name}`
   pImage.innerText = `${taco.image}`
@@ -215,6 +216,26 @@ function renderOneTaco(taco) {
   div.appendChild(deleteLink)
 
   tacosDiv.appendChild(div)
+}
+
+function deleteTaco(e){
+  e.preventDefault();
+
+  // grabbing target('a') and dataset (what is attached to the 'a') and then the id
+  let id = e.target.dataset.id
+
+  fetch(baseUrl + '/tacos/' + id, {
+    method: 'DELETE'
+  })
+  .then(function(resp){
+    return resp.json();
+  })
+  .then(function(data){
+    tacos = tacos.filter(function(taco){
+      return taco.id !== data.id
+    })
+    renderAllTacos();
+  })
 }
 
 

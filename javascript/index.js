@@ -1,17 +1,9 @@
 let tacos = []
 
 baseUrl = "http://localhost:3000"
-// WHEN PAGE IS LOADED
-document.addEventListener("DOMContentLoaded", () => {
-  getTacos();
-  formLinkEvent();
-  tacoLinkEvent();
-  // renderAllTacos();
-
-})
 
 // MAIN DIVs
-function main(){
+function main() {
   return document.getElementById('main')
 }
 
@@ -44,19 +36,23 @@ function locationInput() {
   return document.getElementById('location')
 }
 
-function formLink(){
+function categoryInput(){
+  return document.getElementById('category')
+}
+
+function formLink() {
   return document.getElementById('form-link')
 }
 
-function tacoLink(){
+function tacoLink() {
   return document.getElementById('taco-link')
 }
 
-function getTacos(){
+function getTacos() {
   //fetch to rails api, tacos index. grab tacos list, populate main div with all tacos
   fetch(baseUrl + '/tacos')
     .then(resp => resp.json())
-    .then(function(data){
+    .then(function (data) {
       tacos = data
 
       renderAllTacos()
@@ -70,40 +66,50 @@ function resetFormInputs() {
   restaurantInput().value = ""
   urlInput().value = ""
   locationInput().value = ""
+  categoryInput().value = ""
 }
 
 // FORMS
 function tacoForm() {
   return `
   <form id="form">
-      <div class="input-field">
-        <label for="name">Taco Name</label>
-        <input type="text" name="name" id="name">
-      </div>
-      <div class="input-field">
-        <label for="image"></label><br>
-        <input type="text" name='image' id="image" >
-      </div>
-      <div class="input-field">
-        <label for="description">Description</label> <br>
-        <textarea name="description" id="description" cols="30" rows="5"></textarea>
-      </div>
-      <br>
-      <div class="input-field">
-        <label for="restaurant">Restaurant Name</label> 
-        <input type="text" name="restaurant" id="restaurant"> -- 
-        <label for="url">Restaurant Website</label>
-        <input type="text" name="url" id="url">
+  <div class="input-field">
+  <label for="name">Taco Name</label>
+  <input type="text" name="name" id="name">
+  </div>
+  <div class="input-field">
+  <label for="image"></label><br>
+  <input type="text" name='image' id="image" >
+  </div>
+  <div class="input-field">
+  <label for="description">Description</label> <br>
+  <textarea name="description" id="description" cols="30" rows="5"></textarea>
+  </div>
+  <div>
+  <select id='category' name='category'>
+    <option>Taco Category</option>
+    <option value="1">Fish</option>
+    <option value="2">Pork</option>
+    <option value="3">Beef</option>
+    <option value="4">Veg</option>
+  </select>
+  </div>
+  <br>
+  <div class="input-field">
+  <label for="restaurant">Restaurant Name</label> 
+  <input type="text" name="restaurant" id="restaurant"> -- 
+  <label for="url">Restaurant Website</label>
+  <input type="text" name="url" id="url">
       </div>
       <br>
       <div class='input-field'>
-        <label for="location">City & State</label>
-        <input type="text" name='location' id='location'>
+      <label for="location">City & State</label>
+      <input type="text" name='location' id='location'>
       </div>
       <br>
       <input type="submit" value="Add Taco">
-    </form>
-  </div>`
+      </form>
+      </div>`
 }
 
 function form() {
@@ -128,12 +134,26 @@ function submitForm(e) {
       description: descInput().value,
       restaurant: restaurantInput().value,
       url: urlInput().value,
-      location: locationInput().value  
+      location: locationInput().value,
+      category_attributes: categoryInput().value
+    }
   }
 
   //send data to the backend via a post request
-  fetch('/tacos', {
-    body: strongParams
+  fetch(baseUrl + '/tacos', {
+    body: JSON.stringify(strongParams),
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    }, 
+    method: 'POST'
+  })
+  .then(function(resp){
+    return resp.json()
+  })
+  .then(function(taco){
+    tacos.push(taco)
+    renderAllTacos();
   })
 
   //creating a taco object
@@ -150,20 +170,21 @@ function submitForm(e) {
 }
 
 // After taco object exists
-function tacosTemplate(){
+function tacosTemplate() {
   return `
   <h2><u>Tacos</u></h2>
-    <div id="tacos">
-      
-      </div>
+  <div id="tacos">
+  
+  </div>
   `
 }
 
-function renderOneTaco(taco){
+function renderOneTaco(taco) {
   let div = document.createElement('div')
   let h4 = document.createElement('h4')
   let pImage = document.createElement('p')
   let pDesc = document.createElement('p')
+  let pCategory = document.createElement('p')
   let pRestaurant = document.createElement('p')
   let pUrl = document.createElement('p')
   let pLocation = document.createElement('p')
@@ -175,10 +196,12 @@ function renderOneTaco(taco){
   pRestaurant.innerText = `${taco.restaurant}`
   pUrl.innerText = `${taco.url}`
   pLocation.innerText = `${taco.location}`
+  pCategory.innerText = `Category: ${taco.category.name}`
 
   div.appendChild(h4)
   div.appendChild(pImage)
   div.appendChild(pDesc)
+  div.appendChild(pCategory)
   div.appendChild(pRestaurant)
   div.appendChild(pUrl)
   div.appendChild(pLocation)
@@ -187,28 +210,35 @@ function renderOneTaco(taco){
 }
 
 
-function renderAllTacos(){
+function renderAllTacos() {
   resetMain();
   main().innerHTML = tacosTemplate();
 
-  tacos.forEach(function(taco){
+  tacos.forEach(function (taco) {
     renderOneTaco(taco);
   })
 }
 
 //LINKS
-function formLinkEvent(){
-  formLink().addEventListener('click', function(e){
+function formLinkEvent() {
+  formLink().addEventListener('click', function (e) {
     e.preventDefault()
 
     renderForm()
   })
 }
 
-function tacoLinkEvent(){
-  tacoLink().addEventListener('click', function(e){
+function tacoLinkEvent() {
+  tacoLink().addEventListener('click', function (e) {
     e.preventDefault()
 
     renderAllTacos()
   })
 }
+document.addEventListener("DOMContentLoaded", () => {
+  getTacos();
+  formLinkEvent();
+  tacoLinkEvent();
+  // renderAllTacos();
+
+})

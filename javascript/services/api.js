@@ -40,4 +40,15 @@ class Api {
 
     return data;
   }
+
+  static async delete(path){
+    let resp = await fetch(Api.baseUrl + path, {
+      method: 'DELETE',
+      headers: Api.headers,
+    })
+
+    let data = await resp.json()
+
+    return data;
+  }
 }

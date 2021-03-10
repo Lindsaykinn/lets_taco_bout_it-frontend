@@ -183,7 +183,7 @@ class Taco {
         <input type="text" name='location' id='location' value="${taco.location}">
         </div>
         <br>
-        <input type="submit" value="Edit Taco">
+        <input type="submit" value="Update Taco">
         </form>
         </div>`
   }
@@ -224,24 +224,18 @@ class Taco {
     Taco.renderEditForm(taco);
   }
 
-  static deleteTaco(e) {
+  static async deleteTaco(e) {
     e.preventDefault();
 
     // grabbing target('a') and dataset (what is attached to the 'a') and then the id
     let id = e.target.dataset.id
 
-    fetch(Api.baseUrl + '/tacos/' + id, {
-        method: 'DELETE'
-      })
-      .then(function (resp) {
-        return resp.json();
-      })
-      .then(function (data) {
-        Taco.all = Taco.all.filter(function (taco) {
-          return taco.id !== data.id
-        })
-        Taco.renderAllTacos();
-      })
+    const data = await Api.delete(Api.baseUrl + '/tacos/' + id)
+
+    Taco.all = Taco.all.filter(function(taco) {
+      return taco.id !== data.id
+    })
+    Taco.renderAllTacos();
   }
 
   static submitForm(e) {
@@ -303,6 +297,4 @@ class Taco {
         Taco.renderAllTacos();
       })
   }
-
-
 }

@@ -1,51 +1,6 @@
-let tacos = []
-
-baseUrl = "http://localhost:3000"
-
-// MAIN DIVs
-function main() {
-  return document.getElementById('main')
-}
 
 function resetMain() {
   main().innerHTML = ""
-}
-
-// INPUTS (DOM Getters)
-function nameInput() {
-  return document.getElementById('name')
-}
-
-function imageInput() {
-  return document.getElementById('image')
-}
-
-function descInput() {
-  return document.getElementById('description')
-}
-
-function restaurantInput() {
-  return document.getElementById('restaurant')
-}
-
-function urlInput() {
-  return document.getElementById('url')
-}
-
-function locationInput() {
-  return document.getElementById('location')
-}
-
-function categoryInput(){
-  return document.getElementById('category')
-}
-
-function formLink() {
-  return document.getElementById('form-link')
-}
-
-function tacoLink() {
-  return document.getElementById('taco-link')
 }
 
 function getTacos() {

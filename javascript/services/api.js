@@ -28,4 +28,16 @@ class Api {
 
     return data;
   }
+
+  static async patch(path, params){
+    let resp = await fetch(Api.baseUrl + path, {
+      method: 'PATCH',
+      headers: Api.headers,
+      body: JSON.stringify(params)
+    })
+
+    let data = await resp.json()
+
+    return data;
+  }
 }

@@ -86,9 +86,9 @@ class Taco {
   static async getTacos() {
     //fetch to rails api, tacos index. grab tacos list, populate main div with all tacos
     const data = await Api.get('/tacos')
-        // tacos = data
-        Taco.createFromCollection(data)
-        Taco.renderAllTacos()
+    // tacos = data
+    Taco.createFromCollection(data)
+    Taco.renderAllTacos()
   }
 
   //TACO TEMPLATES//
@@ -197,12 +197,12 @@ class Taco {
     form().addEventListener('submit', Taco.submitForm);
   }
 
-  static renderEditForm(taco){
+  static renderEditForm(taco) {
     resetMain()
     main().innerHTML = Taco.editTacoForm(taco)
     form().addEventListener('submit', Taco.submitEditForm)
   }
-  
+
 
   static renderAllTacos() {
     resetMain();
@@ -213,23 +213,23 @@ class Taco {
 
   //Event handlers
 
-  static editTaco(e){
+  static editTaco(e) {
     e.preventDefault();
     const id = e.target.dataset.id
-  
-    const taco = Taco.all.find(function(taco){
+
+    const taco = Taco.all.find(function (taco) {
       return taco.id == id;
     })
-  
+
     Taco.renderEditForm(taco);
   }
 
   static deleteTaco(e) {
     e.preventDefault();
-  
+
     // grabbing target('a') and dataset (what is attached to the 'a') and then the id
     let id = e.target.dataset.id
-  
+
     fetch(Api.baseUrl + '/tacos/' + id, {
         method: 'DELETE'
       })
@@ -261,8 +261,8 @@ class Taco {
     //send data to the backend via a post request
     Api.post('/tacos', strongParams)
       .then(function (taco) {
-      Taco.create(taco)
-      Taco.renderAllTacos();
+        Taco.create(taco)
+        Taco.renderAllTacos();
       })
     //creating a taco object
     // tacos.push({
@@ -276,7 +276,7 @@ class Taco {
     Taco.renderAllTacos();
   }
 
-  static submitEditForm(e){
+  static submitEditForm(e) {
     e.preventDefault();
     let strongParams = {
       taco: {
@@ -290,31 +290,19 @@ class Taco {
       }
     }
     const id = e.target.dataset.id
-  
-    fetch(Api.baseUrl + "/tacos/" + id, {
-      method: "PATCH",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(strongParams)
-    })
-    .then(function(resp){
-      return resp.json();
-    })
-    .then(function(taco){
-      //selects taco out of array
-      let t = Taco.all.find(function(t){
-        return t.id == taco.id
+
+    Api.patch("/tacos/" + id, strongParams)
+      .then(function (taco) {
+        //selects taco out of array
+        let t = Taco.all.find((t) => t.id == taco.id)
+        //finding the index of the taco found in the above function
+        let idx = Taco.all.indexOf(t)
+        //update the index value with the newly updated taco
+        Taco.all[idx] = new Taco(taco)
+
+        Taco.renderAllTacos();
       })
-      //finding the index of the taco found in the above function
-      let idx = Taco.all.indexOf(t)
-      //update the index value with the newly updated taco
-      Taco.all[idx] = new Taco(taco)
-  
-      Taco.renderAllTacos();
-    })
   }
 
-  
+
 }

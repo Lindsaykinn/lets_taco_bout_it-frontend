@@ -72,6 +72,15 @@ class Taco {
   }
 
   //**STATIC METHODS**//
+
+  static renderForm() {
+    resetMain();
+    // adding form to main div
+    main().innerHTML = Taco.tacoForm();
+    // putting form in DOM
+    form().addEventListener('submit', submitForm);
+  }
+
   static create(attr) {
     let taco = new Taco(attr)
     taco.save()

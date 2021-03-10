@@ -73,13 +73,7 @@ function form() {
   return document.getElementById('form')
 }
 
-function renderForm() {
-  resetMain();
-  // adding form to main div
-  main().innerHTML = Taco.tacoForm();
-  // putting form in DOM
-  form().addEventListener('submit', submitForm);
-}
+
 
 function renderEditForm(taco){
   resetMain()

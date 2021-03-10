@@ -25,48 +25,7 @@ function resetFormInputs() {
 }
 
 // FORMS
-function tacoForm() {
-  return `
-  <form id="form">
-  <div class="input-field">
-  <label for="name">Taco Name</label>
-  <input type="text" name="name" id="name">
-  </div> <br>
-  <div class="input-field">
-  <label for="image">Image URL</label>
-  <input type="text" name='image' id="image">
-  </div> <br>
-  <div class="input-field">
-  <label for="description">Description</label> <br>
-  <textarea name="description" id="description" cols="30" rows="5"></textarea>
-  </div>
-  <div>
-  <select id='category' name='category'>
-    <option>Taco Category</option>
-    <option value="Fish">Fish</option>
-    <option value="Pork">Pork</option>
-    <option value="Beef">Beef</option>
-    <option value="Veg">Veg</option>
-  </select>
-  </div>
-  <br>
-  <div class="input-field">
-  <label for="restaurant">Restaurant Name</label> 
-  <input type="text" name="restaurant" id="restaurant"> -- 
-  <label for="url">Restaurant Website</label>
-  <input type="url" name="url" id="url">
-      </div>
-      <br>
-      <div class='input-field'>
-      <label for="location">City & State</label>
-      <input type="text" name='location' id='location'>
-      </div>
-      <br>
-      <input type="submit" value="Add Taco">
-      </form>
-      </div>
-      `
-}
+
 
 function editTacoForm(taco) {
   return `
@@ -117,7 +76,7 @@ function form() {
 function renderForm() {
   resetMain();
   // adding form to main div
-  main().innerHTML = tacoForm();
+  main().innerHTML = Taco.tacoForm();
   // putting form in DOM
   form().addEventListener('submit', submitForm);
 }
@@ -213,69 +172,7 @@ function submitEditForm(e){
   })
 }
 
-// After taco object exists
-function tacosTemplate() {
-  return `
-  <h2><u>Tacos</u></h2>
-  <div id="tacos">
-  
-  </div>
-  `
-}
 
-function renderOneTaco(taco) {
-  let div = document.createElement('div')
-  let h3 = document.createElement('h3')
-
-  let pImage = document.createElement('img')
-  pImage.src = taco.image
-  pImage.setAttribute('width', 325)
-  pImage.setAttribute('height', 250)
-
-  let pDesc = document.createElement('p')
-  let pCategory = document.createElement('p')
-  let pRestaurant = document.createElement('p')
-  let pUrl = document.createElement('a')
-  let pLocation = document.createElement('p')
-  let deleteLink = document.createElement('a')
-  let editLink = document.createElement('a')
-  let tacosDiv = document.getElementById('tacos')
-
-  pUrl.setAttribute('href', `${taco.url}`)
-
-  
-
-  deleteLink.dataset.id = taco.id
-  deleteLink.setAttribute('href', "#")
-  deleteLink.innerText = 'Delete'
-  deleteLink.addEventListener('click', deleteTaco)
-
-  editLink.dataset.id = taco.id
-  editLink.addEventListener('click', editTaco)
-  editLink.setAttribute('href', "#")
-  editLink.innerText = 'Edit'
-
-
-  h3.innerText = `${taco.name}`
-  pImage.innerText = `${taco.image}`
-  pDesc.innerText = `${taco.description}`
-  pRestaurant.innerText = `${taco.restaurant}`
-  pUrl.innerText = `${taco.url}`
-  pLocation.innerText = `${taco.location}`
-  pCategory.innerText = `Category: ${taco.category.name}`
-
-  div.appendChild(h3)
-  div.appendChild(pImage)
-  div.appendChild(pDesc)
-  div.appendChild(pCategory)
-  div.appendChild(pRestaurant)
-  div.appendChild(pUrl)
-  div.appendChild(pLocation)
-  div.appendChild(deleteLink)  
-  div.appendChild(editLink)
-
-  tacosDiv.appendChild(div)
-}
 
 function deleteTaco(e){
   e.preventDefault();
@@ -290,7 +187,7 @@ function deleteTaco(e){
     return resp.json();
   })
   .then(function(data){
-    Taco.all = Blog.all.filter(function(taco){
+    Taco.all = Taco.all.filter(function(taco){
       return taco.id !== data.id
     })
     Taco.renderAllTacos();

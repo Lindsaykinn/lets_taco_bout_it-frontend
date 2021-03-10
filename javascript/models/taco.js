@@ -230,7 +230,7 @@ class Taco {
     // grabbing target('a') and dataset (what is attached to the 'a') and then the id
     let id = e.target.dataset.id
 
-    const data = await Api.delete(Api.baseUrl + '/tacos/' + id)
+    const data = await Api.delete('/tacos/' + id)
 
     Taco.all = Taco.all.filter(function(taco) {
       return taco.id !== data.id

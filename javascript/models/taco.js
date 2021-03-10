@@ -38,10 +38,10 @@ class Taco {
     deleteLink.dataset.id = this.id
     deleteLink.setAttribute('href', "#")
     deleteLink.innerText = 'Delete'
-    deleteLink.addEventListener('click', deleteTaco)
+    deleteLink.addEventListener('click', Taco.deleteTaco)
 
     editLink.dataset.id = this.id
-    editLink.addEventListener('click', editTaco)
+    editLink.addEventListener('click', Taco.editTaco)
     editLink.setAttribute('href', "#")
     editLink.innerText = 'Edit'
 
@@ -72,7 +72,6 @@ class Taco {
   }
 
   //**STATIC METHODS**//
-
 
   static create(attr) {
     let taco = new Taco(attr)
@@ -139,66 +138,6 @@ class Taco {
     `
   }
 
-  static renderForm() {
-    resetMain();
-    // adding form to main div
-    main().innerHTML = Taco.tacoForm();
-    // putting form in DOM
-    form().addEventListener('submit', Taco.submitForm);
-  }
-
-  static renderAllTacos() {
-    resetMain();
-    main().innerHTML = Taco.tacosTemplate();
-
-    Taco.all.forEach(taco => taco.render())
-  }
-
-  //Event handlers
-
-  static submitForm(e) {
-    e.preventDefault();
-
-    let strongParams = {
-      taco: {
-        name: nameInput().value,
-        image: imageInput().value,
-        description: descInput().value,
-        restaurant: restaurantInput().value,
-        url: urlInput().value,
-        location: locationInput().value,
-        category_attributes: categoryInput().value
-      }
-    }
-
-    //send data to the backend via a post request
-    fetch(baseUrl + '/tacos', {
-        body: JSON.stringify(strongParams),
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
-        method: 'POST'
-      })
-      .then(function (resp) {
-        return resp.json()
-      })
-      .then(function (taco) {
-        Taco.create(taco)
-        Taco.renderAllTacos();
-      })
-    //creating a taco object
-    // tacos.push({
-    //   name: nameInput().value,
-    //   image: imageInput().value,
-    //   description: descInput().value,
-    //   restaurant: restaurantInput().value,
-    //   url: urlInput().value,
-    //   location: locationInput().value
-    // })  
-    Taco.renderAllTacos();
-  }
-
   static editTacoForm(taco) {
     return `
     <form id="form" data-id="${taco.id}">
@@ -240,4 +179,145 @@ class Taco {
         </form>
         </div>`
   }
+
+  //**renders **/
+  static renderForm() {
+    resetMain();
+    // adding form to main div
+    main().innerHTML = Taco.tacoForm();
+    // putting form in DOM
+    form().addEventListener('submit', Taco.submitForm);
+  }
+
+  static renderEditForm(taco){
+    resetMain()
+    main().innerHTML = Taco.editTacoForm(taco)
+    form().addEventListener('submit', Taco.submitEditForm)
+  }
+  
+
+  static renderAllTacos() {
+    resetMain();
+    main().innerHTML = Taco.tacosTemplate();
+
+    Taco.all.forEach(taco => taco.render())
+  }
+
+  //Event handlers
+
+  static editTaco(e){
+    e.preventDefault();
+    const id = e.target.dataset.id
+  
+    const taco = Taco.all.find(function(taco){
+      return taco.id == id;
+    })
+  
+    Taco.renderEditForm(taco);
+  }
+
+  static deleteTaco(e) {
+    e.preventDefault();
+  
+    // grabbing target('a') and dataset (what is attached to the 'a') and then the id
+    let id = e.target.dataset.id
+  
+    fetch(Api.baseUrl + '/tacos/' + id, {
+        method: 'DELETE'
+      })
+      .then(function (resp) {
+        return resp.json();
+      })
+      .then(function (data) {
+        Taco.all = Taco.all.filter(function (taco) {
+          return taco.id !== data.id
+        })
+        Taco.renderAllTacos();
+      })
+  }
+
+  static submitForm(e) {
+    e.preventDefault();
+
+    let strongParams = {
+      taco: {
+        name: nameInput().value,
+        image: imageInput().value,
+        description: descInput().value,
+        restaurant: restaurantInput().value,
+        url: urlInput().value,
+        location: locationInput().value,
+        category_attributes: categoryInput().value
+      }
+    }
+
+    //send data to the backend via a post request
+    fetch(Api.baseUrl + '/tacos', {
+        body: JSON.stringify(strongParams),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        method: 'POST'
+      })
+      .then(function (resp) {
+        return resp.json()
+      })
+      .then(function (taco) {
+        Taco.create(taco)
+        Taco.renderAllTacos();
+      })
+    //creating a taco object
+    // tacos.push({
+    //   name: nameInput().value,
+    //   image: imageInput().value,
+    //   description: descInput().value,
+    //   restaurant: restaurantInput().value,
+    //   url: urlInput().value,
+    //   location: locationInput().value
+    // })  
+    Taco.renderAllTacos();
+  }
+
+  static submitEditForm(e){
+    e.preventDefault();
+    let strongParams = {
+      taco: {
+        name: nameInput().value,
+        image: imageInput().value,
+        description: descInput().value,
+        restaurant: restaurantInput().value,
+        url: urlInput().value,
+        location: locationInput().value,
+        category_attributes: categoryInput().value
+      }
+    }
+    const id = e.target.dataset.id
+  
+    fetch(Api.baseUrl + "/tacos/" + id, {
+      method: "PATCH",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(strongParams)
+    })
+    .then(function(resp){
+      return resp.json();
+    })
+    .then(function(taco){
+      //selects taco out of array
+      let t = Taco.all.find(function(t){
+        return t.id == taco.id
+      })
+      //finding the index of the taco found in the above function
+      let idx = Taco.all.indexOf(t)
+      //update the index value with the newly updated taco
+      Taco.all[idx] = new Taco(taco)
+  
+      Taco.renderAllTacos();
+    })
+  }
+
+  
 }

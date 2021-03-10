@@ -1,7 +1,5 @@
 /**Global Variables **/
 
-let tacos = []
-
 baseUrl = "http://localhost:3000"
 
 //**Node Getters **/

@@ -8,9 +8,9 @@ function getTacos() {
   fetch(baseUrl + '/tacos')
     .then(resp => resp.json())
     .then(function (data) {
-      tacos = data
-
-      renderAllTacos()
+      // tacos = data
+      Taco.createFromCollection(data)
+      Taco.renderAllTacos()
     })
 }
 
@@ -156,8 +156,8 @@ function submitForm(e) {
     return resp.json()
   })
   .then(function(taco){
-    tacos.push(taco)
-    renderAllTacos();
+    Taco.all.push(taco)
+    Taco.renderAllTacos();
   })
 
   //creating a taco object
@@ -170,7 +170,7 @@ function submitForm(e) {
   //   location: locationInput().value
   // })
 
-  renderAllTacos();
+  Taco.renderAllTacos();
 }
 
 function submitEditForm(e){
@@ -201,15 +201,15 @@ function submitEditForm(e){
   })
   .then(function(taco){
     //selects taco out of array
-    let t = tacos.find(function(t){
+    let t = Taco.all.find(function(t){
       return t.id == taco.id
     })
     //finding the index of the taco found in the above function
-    let idx = tacos.indexOf(t)
+    let idx = Taco.all.indexOf(t)
     //update the index value with the newly updated taco
-    tacos[idx] = taco
+    Taco.all[idx] = taco
 
-    renderAllTacos();
+    Taco.renderAllTacos();
   })
 }
 
@@ -290,10 +290,10 @@ function deleteTaco(e){
     return resp.json();
   })
   .then(function(data){
-    tacos = tacos.filter(function(taco){
+    Taco.all = Blog.all.filter(function(taco){
       return taco.id !== data.id
     })
-    renderAllTacos();
+    Taco.renderAllTacos();
   })
 }
 
@@ -301,21 +301,11 @@ function editTaco(e){
   e.preventDefault();
   const id = e.target.dataset.id
 
-  const taco = tacos.find(function(taco){
+  const taco = Taco.all.find(function(taco){
     return taco.id == id;
   })
 
   renderEditForm(taco);
-}
-
-
-function renderAllTacos() {
-  resetMain();
-  main().innerHTML = tacosTemplate();
-
-  tacos.forEach(function (taco) {
-    renderOneTaco(taco);
-  })
 }
 
 //LINKS
@@ -331,7 +321,7 @@ function tacoLinkEvent() {
   tacoLink().addEventListener('click', function (e) {
     e.preventDefault()
 
-    renderAllTacos()
+    Taco.renderAllTacos()
   })
 }
 document.addEventListener("DOMContentLoaded", () => {

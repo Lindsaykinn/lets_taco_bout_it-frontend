@@ -2,15 +2,12 @@ function resetMain() {
   main().innerHTML = ""
 }
 
-function getTacos() {
+async function getTacos() {
   //fetch to rails api, tacos index. grab tacos list, populate main div with all tacos
-  fetch(baseUrl + '/tacos')
-    .then(resp => resp.json())
-    .then(function (data) {
+  const data = await Api.get('/tacos')
       // tacos = data
       Taco.createFromCollection(data)
       Taco.renderAllTacos()
-    })
 }
 
 function resetFormInputs() {

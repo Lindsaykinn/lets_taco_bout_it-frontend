@@ -83,6 +83,14 @@ class Taco {
     collection.forEach(attr => Taco.create(attr))
   }
 
+  static async getTacos() {
+    //fetch to rails api, tacos index. grab tacos list, populate main div with all tacos
+    const data = await Api.get('/tacos')
+        // tacos = data
+        Taco.createFromCollection(data)
+        Taco.renderAllTacos()
+  }
+
   //TACO TEMPLATES//
 
   // After taco object exists

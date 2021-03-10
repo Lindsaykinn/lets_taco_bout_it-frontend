@@ -258,22 +258,11 @@ class Taco {
         category_attributes: categoryInput().value
       }
     }
-
     //send data to the backend via a post request
-    fetch(Api.baseUrl + '/tacos', {
-        body: JSON.stringify(strongParams),
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
-        method: 'POST'
-      })
-      .then(function (resp) {
-        return resp.json()
-      })
+    Api.post('/tacos', strongParams)
       .then(function (taco) {
-        Taco.create(taco)
-        Taco.renderAllTacos();
+      Taco.create(taco)
+      Taco.renderAllTacos();
       })
     //creating a taco object
     // tacos.push({

@@ -2,14 +2,6 @@ function resetMain() {
   main().innerHTML = ""
 }
 
-async function getTacos() {
-  //fetch to rails api, tacos index. grab tacos list, populate main div with all tacos
-  const data = await Api.get('/tacos')
-      // tacos = data
-      Taco.createFromCollection(data)
-      Taco.renderAllTacos()
-}
-
 function resetFormInputs() {
   nameInput().value = ""
   imageInput().value = ""
@@ -21,12 +13,9 @@ function resetFormInputs() {
 }
 
 // FORMS
-
 function form() {
   return document.getElementById('form')
 }
-
-
 
 //LINKS
 function formLinkEvent() {
@@ -44,8 +33,9 @@ function tacoLinkEvent() {
     Taco.renderAllTacos()
   })
 }
+
 document.addEventListener("DOMContentLoaded", () => {
-  getTacos();
+  Taco.getTacos();
   formLinkEvent();
   tacoLinkEvent();
   // renderAllTacos();

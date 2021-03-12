@@ -117,7 +117,7 @@ Refactor to make your code more DRY
   - Easiest to implement: Bulma
   - Most popular: Bootstrap
   - Also good: Semantic UI
-  - Not bootstrap: Materialize
+  - **Not bootstrap: Materialize**
 
 **Confirm**
 - [X] You have a large number of small Git commits

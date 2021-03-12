@@ -106,15 +106,25 @@ class Taco {
   static tacoForm() {
     return `
     <form id="form">
-    <div class="input-field">
-    <label for="name">Taco Name</label>
-    <input type="text" name="name" id="name">
-    </div> <br>
-    <div class="input-field">
+    <div class="row g-2">
+    <div class="col-md-2">
+    <div class='form-floating'>
+    <input type="text" class='form-control' id='floatingInput' name="name">
+    <label for="floatingName">Taco Name</label>
+    </div>
+    </div>
+    </div>
+    <br>
+    <div class="row g-2">
+    <div class="col-md-2">
+    <div class='form-floating'>
+    <input type="text" class='form-control' id='floatingInput' name='image'>
     <label for="image">Image URL</label>
-    <input type="text" name='image' id="image">
-    </div> <br>
-    <div class="input-field">
+    </div> 
+    </div>
+    </div>
+    <br>
+    <div>
     <label for="description">Description</label> <br>
     <textarea name="description" id="description" cols="30" rows="5"></textarea>
     </div>
@@ -128,14 +138,14 @@ class Taco {
     </select>
     </div>
     <br>
-    <div class="input-field">
+    <div>
     <label for="restaurant">Restaurant Name</label> 
     <input type="text" name="restaurant" id="restaurant"> -- 
     <label for="url">Restaurant Website</label>
     <input type="url" name="url" id="url">
     </div>
     <br>
-    <div class='input-field'>
+    <div>
     <label for="location">City & State</label>
     <input type="text" name='location' id='location'>
     </div>

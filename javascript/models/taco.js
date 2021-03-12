@@ -33,7 +33,9 @@ class Taco {
     let editLink = document.createElement('a')
     let tacosDiv = document.getElementById('tacos')
 
+
     pUrl.setAttribute('href', `${this.url}`)
+
 
     deleteLink.dataset.id = this.id
     deleteLink.setAttribute('href', "#")
@@ -54,8 +56,12 @@ class Taco {
     pLocation.innerText = `${this.location}`
     pCategory.innerText = `Category: ${this.category.name}`
 
-    div.appendChild(h3)
+    div.className = "card"
+    pImage.className = 'card-img-top'
+    
+
     div.appendChild(pImage)
+    div.appendChild(h3)
     div.appendChild(pDesc)
     div.appendChild(pCategory)
     div.appendChild(pRestaurant)
@@ -97,10 +103,16 @@ class Taco {
   static tacosTemplate() {
     return `
     <h2><u>Tacos</u></h2>
-    <div id="tacos">
+    <div id="tacos" class= 'card'>
     
     </div>
   `
+  }
+
+  static tacoTemplate(){
+    return `
+    
+    `
   }
 
   static tacoForm() {
@@ -114,7 +126,9 @@ class Taco {
     </div>
     </div>
     </div>
+
     <br>
+
     <div class="row g-2">
     <div class="col-md-2">
     <div class='form-floating'>
@@ -123,34 +137,63 @@ class Taco {
     </div> 
     </div>
     </div>
+    
     <br>
-    <div>
+
+    <div class="row g-2">
+    <div class="col-md-2">
+    <div class='form-floating'>
+    <textarea name="description" class='form-control' id='floatingInput' cols="30" rows="5"></textarea>
     <label for="description">Description</label> <br>
-    <textarea name="description" id="description" cols="30" rows="5"></textarea>
     </div>
-    <div>
-    <select id='category' name='category'>
-    <option>Taco Category</option>
+    </div>
+    </div>
+
+    <div class="row g-2">
+    <div class="col-md-2">
+    <div class='form-floating'>
+    <select class='form-select' id='floatingSelectGrid' name='category'>
+    <option selected>Choose Category</option>
     <option value="Fish">Fish</option>
     <option value="Pork">Pork</option>
     <option value="Beef">Beef</option>
     <option value="Veg">Veg</option>
     </select>
+    <label for='floatingSelectGrid'>Taco Category</label>
     </div>
+    </div>
+    </div>
+
     <br>
-    <div>
+    
+    <div class="row g-2">
+    <div class="col-md-2">
+    <div class='form-floating'>
+    <input type="text" class='form-control' id='floatingInput' name="restaurant"> 
     <label for="restaurant">Restaurant Name</label> 
-    <input type="text" name="restaurant" id="restaurant"> -- 
+    </div>
+    </div>
+
+    <div class="col-md-2">
+    <div class='form-floating'>
+    <input type="url" class='form-control' id='floatingInput' name="url">
     <label for="url">Restaurant Website</label>
-    <input type="url" name="url" id="url">
     </div>
+    </div>
+    </div>
+
     <br>
-    <div>
+
+    <div class="row g-2">
+    <div class="col-md-2">
+    <div class='form-floating'>
+    <input type="text" class='form-control' id='floatingInput' name='location'>
     <label for="location">City & State</label>
-    <input type="text" name='location' id='location'>
+    </div>
+    </div>
     </div>
     <br>
-    <input type="submit" value="Add Taco">
+    <input class="btn btn-outline-secondary" type="submit" value="Add Taco">
     </form>
     </div>
     `
@@ -159,15 +202,15 @@ class Taco {
   static editTacoForm(taco) {
     return `
     <form id="form" data-id="${taco.id}">
-    <div class="input-field">
+    <div>
     <label for="name">Taco Name</label>
     <input type="text" name="name" id="name" value="${taco.name}">
     </div>
-    <div class="input-field">
+    <div>
     <label for="image">Image URL</label><br>
     <input type="text" name="image" id="image" value="${taco.image}">
     </div>
-    <div class="input-field">
+    <div>
     <label for="description">Description</label> <br>
     <textarea name="description" id="description" cols="30" rows="5">${taco.description}</textarea>
     </div>
@@ -181,14 +224,14 @@ class Taco {
     </select>
     </div>
     <br>
-    <div class="input-field">
+    <div>
     <label for="restaurant">Restaurant Name</label> 
     <input type="text" name="restaurant" id="restaurant" value="${taco.restaurant}"> -- 
     <label for="url">Restaurant Website</label>
     <input type="url" name="url" id="url" value="${taco.url}">
         </div>
         <br>
-        <div class='input-field'>
+        <div>
         <label for="location">City & State</label>
         <input type="text" name='location' id='location' value="${taco.location}">
         </div>

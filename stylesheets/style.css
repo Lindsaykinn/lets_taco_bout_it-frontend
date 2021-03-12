@@ -1,4 +1,50 @@
+.container {
+  text-align: center;
+}
+
 .card{
   width: 30rem;
+  padding: 2em;
+  margin: 2em -2em;
+  margin-top: 1em;
+  color: #ac0d0d; 
 }
+
+h1 {
+  font-family: 'Rye', cursive;
+  color: #ac0d0d;  
+}
+
+h2 {
+  font-family: 'Oswald', sans-serif;
+  color: #ac0d0d;
+  font-size: x-large;
+  font-weight: bolder;
+}
+
+h3 {
+  font-family: 'Rye', cursive;
+}
+
+p {
+  font-family: 'Oswald', sans-serif;
+  font-size: x-large;
+}
+
+a {
+  font-family: 'Oswald', sans-serif;
+  font-size: x-large;
+}
+
+li {
+  list-style: none;
+}
+
+.form {
+  text-align: center;
+}
+
+
+
+
 

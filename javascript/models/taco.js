@@ -18,6 +18,8 @@ class Taco {
   render() {
     let div = document.createElement('div')
     let h3 = document.createElement('h3')
+    let cardBody = document.createElement('div')
+
 
     let pImage = document.createElement('img')
     pImage.src = this.image
@@ -57,7 +59,11 @@ class Taco {
     pCategory.innerText = `Category: ${this.category.name}`
 
     div.className = "card"
+    cardBody.className = 'card-body'
     pImage.className = 'card-img-top'
+    h3.className = 'card-title'
+    pDesc.className = 'card-text'
+
     
 
     div.appendChild(pImage)
@@ -70,6 +76,7 @@ class Taco {
     div.appendChild(deleteLink)
     div.appendChild(editLink)
 
+    cardBody.appendChild(div)
     tacosDiv.appendChild(div)
   }
 
@@ -103,8 +110,7 @@ class Taco {
   static tacosTemplate() {
     return `
     <h2><u>Tacos</u></h2>
-    <div id="tacos" class= 'card'>
-    
+    <div id="tacos" class='tacos'>
     </div>
   `
   }
@@ -117,6 +123,17 @@ class Taco {
 
   static tacoForm() {
     return `
+    <div class="row g-2">
+    <div class="col-md-2">
+    <div class='form-floating'>
+    <input type="text" class='form-control' id='floatingInput' name='image'>
+    <label for="image">Image URL</label>
+    </div> 
+    </div>
+    </div>
+
+    <br>
+
     <form id="form">
     <div class="row g-2">
     <div class="col-md-2">
@@ -127,18 +144,7 @@ class Taco {
     </div>
     </div>
 
-    <br>
-
-    <div class="row g-2">
-    <div class="col-md-2">
-    <div class='form-floating'>
-    <input type="text" class='form-control' id='floatingInput' name='image'>
-    <label for="image">Image URL</label>
-    </div> 
-    </div>
-    </div>
-    
-    <br>
+    <br>    
 
     <div class="row g-2">
     <div class="col-md-2">
@@ -148,6 +154,8 @@ class Taco {
     </div>
     </div>
     </div>
+
+    <br> 
 
     <div class="row g-2">
     <div class="col-md-2">
@@ -201,44 +209,88 @@ class Taco {
 
   static editTacoForm(taco) {
     return `
-    <form id="form" data-id="${taco.id}">
-    <div>
-    <label for="name">Taco Name</label>
-    <input type="text" name="name" id="name" value="${taco.name}">
-    </div>
-    <div>
+    <form id="form" data-id="${taco.id}" >
+    <div class="row g-2">
+    <div class="col-md-6">
+    <div class='form-floating'>
+    <input type="text" name="image" class='form-control' id='floatingInput' value="${taco.image}">
     <label for="image">Image URL</label><br>
-    <input type="text" name="image" id="image" value="${taco.image}">
+    </div> 
     </div>
-    <div>
+    </div>
+
+    <br>
+
+    <div class="row g-2">
+    <div class="col-md-6">
+    <div class='form-floating'>
+    <input type="text" name="name" class='form-control' id='floatingInput' value="${taco.name}">
+    <label for="name">Taco Name</label>
+    </div>
+    </div>
+    </div>
+
+    <br>
+
+    <div class="row g-2">
+    <div class="col-md-6">
+    <div class='form-floating'>
+    <textarea name="description" class='form-control' id='floatingInput' cols="30" rows="5">${taco.description}</textarea>
     <label for="description">Description</label> <br>
-    <textarea name="description" id="description" cols="30" rows="5">${taco.description}</textarea>
     </div>
-    <div>
-    <select id='category' name='category'>
-      <option value="${taco.category.name}">Taco Category</option>
+    </div>
+    </div>
+
+    <br>
+
+    <div class="row g-2">
+    <div class="col-md-2">
+    <div class='form-floating'>
+    <select class='form-select' id='floatingSelectGrid' name='category'>
+      <option selected>${taco.category.name}</option>
       <option value="Fish">Fish</option>
       <option value="Pork">Pork</option>
       <option value="Beef">Beef</option>
       <option value="Veg">Veg</option>
-    </select>
-    </div>
+      </select>
+      <label for='floatingSelectGrid'>Taco Category</label>
+      </div>
+      </div>
+      </div>
+
     <br>
-    <div>
+
+    <div class="row g-2">
+    <div class="col-md-4">
+    <div class='form-floating'>
+    <input type="text" name="restaurant" class='form-control' id='floatingInput' value="${taco.restaurant}">  
     <label for="restaurant">Restaurant Name</label> 
-    <input type="text" name="restaurant" id="restaurant" value="${taco.restaurant}"> -- 
+    </div>
+    </div>
+
+    <div class="col-md-4">
+    <div class='form-floating'>
+    <input type="url" name="url" class='form-control' id='floatingInput' value="${taco.url}">
     <label for="url">Restaurant Website</label>
-    <input type="url" name="url" id="url" value="${taco.url}">
-        </div>
-        <br>
-        <div>
-        <label for="location">City & State</label>
-        <input type="text" name='location' id='location' value="${taco.location}">
-        </div>
-        <br>
-        <input type="submit" value="Update Taco">
-        </form>
-        </div>`
+    </div>
+    </div>
+    </div>
+
+    <br>
+
+    <div class="row g-2">
+    <div class="col-md-6">
+    <div class='form-floating'>
+    <input type="text" name='location' class='form-control' id='floatingInput' value="${taco.location}">
+    <label for="location">City & State</label>
+    </div>
+    </div>
+    </div>
+
+    <br>
+    <input class="btn btn-outline-secondary" type="submit" value="Update Taco">
+    </form>
+    </div>`
   }
 
   //**renders **/

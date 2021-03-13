@@ -58,7 +58,7 @@ class Taco {
     pLocation.innerText = `${this.location}`
     pCategory.innerText = `Category: ${this.category.name}`
 
-    div.className = "card"
+    div.className = "taco-card"
     cardBody.className = 'card-body'
     pImage.className = 'card-img-top'
     h3.className = 'card-title'

@@ -6,12 +6,21 @@
   text-align: center;
 }
 
-.card{
+.taco-card{
   width: 30rem;
   padding: 2em;
-  margin: 2em -2em;
+  margin: 0 auto;
+  background-color: #fbe6c2;
   margin-top: 1em;
-  color: #ac0d0d; 
+  color: #ac0d0d;
+  -webkit-box-shadow: 3px 3px 14px 1px #EDDAB8; 
+  box-shadow: 3px 3px 14px 1px #EDDAB8;
+  background: #FBE6C2;
+}
+}
+
+.card > * {
+  background-color: #fbe6c2;
 }
 
 h1 {

@@ -62,9 +62,10 @@ class Taco {
     cardBody.className = 'card-body'
     pImage.className = 'card-img-top'
     h3.className = 'card-title'
-    pDesc.className = 'card-text'
-
-    
+    pDesc.className = 'card-text'   
+    pUrl.className = 'url' 
+    pRestaurant.className = 'restaurant'
+    pLocation.className = 'location'
 
     div.appendChild(pImage)
     div.appendChild(h3)
@@ -124,9 +125,9 @@ class Taco {
   static tacoForm() {
     return `
     <div class="row g-2">
-    <div class="col-md-2">
+    <div class="col-md-6">
     <div class='form-floating'>
-    <input type="text" class='form-control' id='floatingInput' name='image'>
+    <input type="text" class='form-control' id='image' name='image'>
     <label for="image">Image URL</label>
     </div> 
     </div>
@@ -136,10 +137,10 @@ class Taco {
 
     <form id="form">
     <div class="row g-2">
-    <div class="col-md-2">
+    <div class="col-md-6">
     <div class='form-floating'>
-    <input type="text" class='form-control' id='floatingInput' name="name">
-    <label for="floatingName">Taco Name</label>
+    <input type="text" class='form-control' id='name' name="name">
+    <label for="name">Taco Name</label>
     </div>
     </div>
     </div>
@@ -147,9 +148,9 @@ class Taco {
     <br>    
 
     <div class="row g-2">
-    <div class="col-md-2">
+    <div class="col-md-6">
     <div class='form-floating'>
-    <textarea name="description" class='form-control' id='floatingInput' cols="30" rows="5"></textarea>
+    <textarea name="description" class='form-control' id='description' cols="30" rows="5"></textarea>
     <label for="description">Description</label> <br>
     </div>
     </div>
@@ -158,9 +159,9 @@ class Taco {
     <br> 
 
     <div class="row g-2">
-    <div class="col-md-2">
+    <div class="col-md-4">
     <div class='form-floating'>
-    <select class='form-select' id='floatingSelectGrid' name='category'>
+    <select class='form-select' id='category' name='category'>
     <option selected>Choose Category</option>
     <option value="Fish">Fish</option>
     <option value="Pork">Pork</option>
@@ -175,16 +176,16 @@ class Taco {
     <br>
     
     <div class="row g-2">
-    <div class="col-md-2">
+    <div class="col-md-4">
     <div class='form-floating'>
-    <input type="text" class='form-control' id='floatingInput' name="restaurant"> 
+    <input type="text" class='form-control' id='restaurant' name="restaurant"> 
     <label for="restaurant">Restaurant Name</label> 
     </div>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-4">
     <div class='form-floating'>
-    <input type="url" class='form-control' id='floatingInput' name="url">
+    <input type="url" class='form-control' id='url' name="url">
     <label for="url">Restaurant Website</label>
     </div>
     </div>
@@ -193,9 +194,9 @@ class Taco {
     <br>
 
     <div class="row g-2">
-    <div class="col-md-2">
+    <div class="col-md-6">
     <div class='form-floating'>
-    <input type="text" class='form-control' id='floatingInput' name='location'>
+    <input type="text" class='form-control' id='location' name='location'>
     <label for="location">City & State</label>
     </div>
     </div>
@@ -213,7 +214,7 @@ class Taco {
     <div class="row g-2">
     <div class="col-md-6">
     <div class='form-floating'>
-    <input type="text" name="image" class='form-control' id='floatingInput' value="${taco.image}">
+    <input type="text" name="image" class='form-control' id='image' value="${taco.image}">
     <label for="image">Image URL</label><br>
     </div> 
     </div>
@@ -224,7 +225,7 @@ class Taco {
     <div class="row g-2">
     <div class="col-md-6">
     <div class='form-floating'>
-    <input type="text" name="name" class='form-control' id='floatingInput' value="${taco.name}">
+    <input type="text" name="name" class='form-control' id='name' value="${taco.name}">
     <label for="name">Taco Name</label>
     </div>
     </div>
@@ -235,7 +236,7 @@ class Taco {
     <div class="row g-2">
     <div class="col-md-6">
     <div class='form-floating'>
-    <textarea name="description" class='form-control' id='floatingInput' cols="30" rows="5">${taco.description}</textarea>
+    <textarea name="description" class='form-control' id='description' cols="30" rows="5">${taco.description}</textarea>
     <label for="description">Description</label> <br>
     </div>
     </div>
@@ -244,9 +245,9 @@ class Taco {
     <br>
 
     <div class="row g-2">
-    <div class="col-md-2">
+    <div class="col-md-4">
     <div class='form-floating'>
-    <select class='form-select' id='floatingSelectGrid' name='category'>
+    <select class='form-select' id='category' name='category'>
       <option selected>${taco.category.name}</option>
       <option value="Fish">Fish</option>
       <option value="Pork">Pork</option>
@@ -263,14 +264,14 @@ class Taco {
     <div class="row g-2">
     <div class="col-md-4">
     <div class='form-floating'>
-    <input type="text" name="restaurant" class='form-control' id='floatingInput' value="${taco.restaurant}">  
+    <input type="text" name="restaurant" class='form-control' id='restaurant' value="${taco.restaurant}">  
     <label for="restaurant">Restaurant Name</label> 
     </div>
     </div>
 
     <div class="col-md-4">
     <div class='form-floating'>
-    <input type="url" name="url" class='form-control' id='floatingInput' value="${taco.url}">
+    <input type="url" name="url" class='form-control' id='url' value="${taco.url}">
     <label for="url">Restaurant Website</label>
     </div>
     </div>
@@ -281,7 +282,7 @@ class Taco {
     <div class="row g-2">
     <div class="col-md-6">
     <div class='form-floating'>
-    <input type="text" name='location' class='form-control' id='floatingInput' value="${taco.location}">
+    <input type="text" name='location' class='form-control' id='location' value="${taco.location}">
     <label for="location">City & State</label>
     </div>
     </div>

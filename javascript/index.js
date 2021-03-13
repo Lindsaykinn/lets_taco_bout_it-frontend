@@ -3,8 +3,8 @@ function resetMain() {
 }
 
 function resetFormInputs() {
-  nameInput().value = ""
   imageInput().value = ""
+  nameInput().value = ""
   descInput().value = ""
   restaurantInput().value = ""
   urlInput().value = ""

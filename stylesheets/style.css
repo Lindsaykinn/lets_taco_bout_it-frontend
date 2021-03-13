@@ -17,11 +17,11 @@
   box-shadow: 3px 3px 14px 1px #EDDAB8;
   background: #FBE6C2;
 }
-}
 
-.card > * {
+
+/* .card > * {
   background-color: #fbe6c2;
-}
+} */
 
 h1 {
   font-family: 'Rye', cursive;
@@ -47,15 +47,22 @@ p {
 a {
   font-family: 'Oswald', sans-serif;
   font-size: x-large;
+  padding: 10px;
+  
 }
 
 li {
   list-style: none;
 }
 
-.form {
-  text-align: center;
+.restaurant {
+  margin-bottom: 0;
 }
+
+.location {
+  margin-top: 15px;
+}
+
 
 
 

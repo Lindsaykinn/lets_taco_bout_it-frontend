@@ -8,13 +8,15 @@
 
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="stylesheets/style.css">
+  <link rel="stylesheet" href="stylesheets/dark-mode.css">
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&family=Fredericka+the+Great&family=Oswald:wght@300&family=Rye&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+ 
 
 </head>
-<body style="margin-top: 50px; background-color:#fbe6c2">
+<body style="margin-top: 50px; background-color:#fbe6c2" >
   <div class="container">
 
     <h1>Let's Taco Bout It!</h1>
@@ -22,7 +24,11 @@
       <br>
       <a href="#" id='taco-link'>All Tacos</a>
       <br>
-      <br>
+      <div class="custom-control custom-switch">
+          <input type="checkbox" class="custom-control-input" id="darkSwitch">
+          <label class="custom-control-label" for="darkSwitch">Dark Mode</label>
+      </div>
+        
    
   
       <div id='main' class='main'>
@@ -35,5 +41,6 @@
   <script src='javascript/models/taco.js'></script>
   <script src='javascript/services/api.js'></script>  
   <script src='javascript/index.js'></script>
+  <script src='javascript/dark-mode-switch.min.js'></script>
 </body>
 </html>

@@ -29,3 +29,13 @@
   color: #eee !important;
 }
 
+[data-theme="dark"] .form-floating{
+  color: #000 !important;
+}
+
+[data-theme="dark"] .custom-control-label{
+  color: #eee !important;
+}
+
+
+

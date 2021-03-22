@@ -3,6 +3,7 @@ class Taco {
   static all = []
 
   //Instance methods
+  // creating the object from the class that is defined based on the parameters given to the constructor
   constructor(attr) {
     this.id = attr.id
     this.name = attr.name
@@ -37,8 +38,9 @@ class Taco {
 
 
     pUrl.setAttribute('href', `${this.url}`)
+    pUrl.setAttribute('target', '_blank')
 
-
+  // an anchor tag has a dataset property
     deleteLink.dataset.id = this.id
     deleteLink.setAttribute('href', "#")
     deleteLink.innerText = 'Delete'
@@ -81,21 +83,29 @@ class Taco {
     tacosDiv.appendChild(div)
   }
 
-  save() {
-    Taco.all.push(this)
-  }
-
+  
   //**STATIC METHODS**//
-
+  // collection is the data from the API response - getting the array of tacos
+  static createFromCollection(tacoCollection) {
+    tacoCollection.forEach(attr => Taco.create(attr))
+  }
+  
   static create(attr) {
+    // new means to use the constructor and create an object
     let taco = new Taco(attr)
     taco.save()
     return taco
   }
 
-  static createFromCollection(collection) {
-    collection.forEach(attr => Taco.create(attr))
+  save() {
+    Taco.all.push(this)
   }
+
+  // static save(taco){
+  //   Taco.all.push(taco)
+  // }
+  // Would also need to update the create function from taco.save() to Taco.save(taco)
+
 
   static async getTacos() {
     //fetch to rails api, tacos index. grab tacos list, populate main div with all tacos
@@ -336,11 +346,16 @@ class Taco {
     // grabbing target('a') and dataset (what is attached to the 'a') and then the id
     let id = e.target.dataset.id
 
-    const data = await Api.delete('/tacos/' + id)
+    // deleted taco
+    const deletedTaco = await Api.delete('/tacos/' + id)
 
     Taco.all = Taco.all.filter(function(taco) {
-      return taco.id !== data.id
+      return taco.id !== deletedTaco.id
     })
+    /*
+    in a fat arrow function
+    Taco.all = Taco.all.filter(taco => taco.id !== deletedTaco.id); 
+    */
     Taco.renderAllTacos();
   }
 
